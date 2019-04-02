@@ -140,7 +140,7 @@ public class CustomerController {
 		}
 	}
 	
-	public Customer GenerateUsernameAndPassword(Customer customer) {
+	private Customer GenerateUsernameAndPassword(Customer customer) {
 		String firstName="";
 		String lastName="";
 		StringBuilder Username=new StringBuilder();
