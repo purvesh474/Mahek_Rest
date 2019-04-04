@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import Dao.Customer;
+import Service.Interface.LoginService;
 
 @Service
 public class LoginServiceImpl implements LoginService {

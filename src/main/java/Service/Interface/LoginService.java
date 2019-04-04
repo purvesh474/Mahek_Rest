@@ -1,4 +1,4 @@
-package Service;
+package Service.Interface;
 
 import java.util.ArrayList;
 import java.util.Map;

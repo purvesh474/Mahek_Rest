@@ -36,6 +36,22 @@ public class Customer {
 	private String userstatus;
 	private String message;
 	
+	private String agentname;
+	private String shopname;
+	private String villagecity;
+	private String taluka;
+	private String district;
+	private String pincode;
+	private String adharnumber;
+	private String voterid;
+	private String pannumber;
+	private String licenceshop;
+	private String gstnumber;
+	private String ownerphoto;
+	private String shopphoto;
+	
+	
+	
 	public String getMessage() {
 		return message;
 	}
@@ -138,13 +154,98 @@ public class Customer {
 	public void setUserstatus(String userstatus) {
 		this.userstatus = userstatus;
 	}
+	
+	public String getAgentname() {
+		return agentname;
+	}
+	public void setAgentname(String agentname) {
+		this.agentname = agentname;
+	}
+	public String getShopname() {
+		return shopname;
+	}
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
+	}
+	public String getVillagecity() {
+		return villagecity;
+	}
+	public void setVillagecity(String villagecity) {
+		this.villagecity = villagecity;
+	}
+	public String getTaluka() {
+		return taluka;
+	}
+	public void setTaluka(String taluka) {
+		this.taluka = taluka;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getPincode() {
+		return pincode;
+	}
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+	public String getAdharnumber() {
+		return adharnumber;
+	}
+	public void setAdharnumber(String adharnumber) {
+		this.adharnumber = adharnumber;
+	}
+	public String getVoterid() {
+		return voterid;
+	}
+	public void setVoterid(String voterid) {
+		this.voterid = voterid;
+	}
+	public String getPannumber() {
+		return pannumber;
+	}
+	public void setPannumber(String pannumber) {
+		this.pannumber = pannumber;
+	}
+	public String getLicenceshop() {
+		return licenceshop;
+	}
+	public void setLicenceshop(String licenceshop) {
+		this.licenceshop = licenceshop;
+	}
+	public String getGstnumber() {
+		return gstnumber;
+	}
+	public void setGstnumber(String gstnumber) {
+		this.gstnumber = gstnumber;
+	}
+	public String getOwnerphoto() {
+		return ownerphoto;
+	}
+	public void setOwnerphoto(String ownerphoto) {
+		this.ownerphoto = ownerphoto;
+	}
+	public String getShopphoto() {
+		return shopphoto;
+	}
+	public void setShopphoto(String shopphoto) {
+		this.shopphoto = shopphoto;
+	}
+	
 	@Override
 	public String toString() {
 		return "Customer [userid=" + userid + ", username=" + username + ", password=" + password + ", firstname="
 				+ firstname + ", lastname=" + lastname + ", emailid=" + emailid + ", mobile=" + mobile + ", address="
 				+ address + ", usertype=" + usertype + ", loginatmp=" + loginatmp + ", paramstr1=" + paramstr1
 				+ ", paramstr2=" + paramstr2 + ", paramstr3=" + paramstr3 + ", createdate=" + createdate
-				+ ", updatedate=" + updatedate + ", userstatus=" + userstatus + "]";
+				+ ", updatedate=" + updatedate + ", userstatus=" + userstatus + ", message=" + message + ", agentname="
+				+ agentname + ", shopname=" + shopname + ", villagecity=" + villagecity + ", taluka=" + taluka
+				+ ", district=" + district + ", pincode=" + pincode + ", adharnumber=" + adharnumber + ", voterid="
+				+ voterid + ", pannumber=" + pannumber + ", licenceshop=" + licenceshop + ", gstnumber=" + gstnumber
+				+ ", ownerphoto=" + ownerphoto + ", shopphoto=" + shopphoto + "]";
 	}
+	
 	
 }

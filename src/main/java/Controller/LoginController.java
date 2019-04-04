@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 
 import Dao.Customer;
-import Service.LoginService;
+import Service.Interface.LoginService;
 
 @RestController
 @RequestMapping("/login")
@@ -27,7 +27,7 @@ public class LoginController {
 	@Autowired
 	public LoginService loginService;
 
-	@RequestMapping(value = "/type", method = RequestMethod.POST,produces=org.springframework.http.MediaType.ALL_VALUE,consumes=org.springframework.http.MediaType.ALL_VALUE)
+	@RequestMapping(value = "/type", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> userLogin(@RequestBody Map<String, String> userDetails) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		boolean flag = false;

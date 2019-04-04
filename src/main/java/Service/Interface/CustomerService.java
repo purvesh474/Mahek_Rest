@@ -1,4 +1,4 @@
-package Service;
+package Service.Interface;
 
 import java.util.ArrayList;
 
@@ -11,5 +11,5 @@ public interface CustomerService {
 	public Customer getCustomerByUsername(String username);
 	public int deleteCustomerById(int id);
 	public int insertCustomerDetails(Customer cus);
-	
+	public int UpdateCustomer(int id, Customer cus);
 }

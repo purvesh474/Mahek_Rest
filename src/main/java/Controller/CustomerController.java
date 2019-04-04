@@ -1,29 +1,22 @@
 package Controller;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import Dao.Customer;
-import Service.CustomerService;
+import Service.Interface.CustomerService;
 
 @RestController
 @RequestMapping("/customer")
@@ -32,7 +25,10 @@ public class CustomerController {
 	@Autowired
 	public CustomerService cusService;
 	
-	
+	@RequestMapping("/index")
+	public String getIndex() {
+		return "Hello Index!";
+	}
 	@RequestMapping("/id/{id}")
 	public ResponseEntity<Map<String, Object>> getCustomerById(@PathVariable("id") int id) {
 		Map<String, Object> returnMap=new HashMap<String, Object>();
@@ -50,12 +46,10 @@ public class CustomerController {
 		return new ResponseEntity(returnMap,HttpStatus.OK);
 		}catch (Exception e) {
 			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
 		}	
-		
-			
-		
-		
+	
 	}
 	
 	@RequestMapping("/all")
@@ -72,6 +66,7 @@ public class CustomerController {
 		return new ResponseEntity(returnMap,HttpStatus.OK);
 		}catch(Exception e) {
 			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
@@ -93,6 +88,7 @@ public class CustomerController {
 			return new ResponseEntity(returnMap,HttpStatus.OK);
 		}catch(Exception e) {
 			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
@@ -114,7 +110,8 @@ public class CustomerController {
 		}
 		return new ResponseEntity(returnMap,HttpStatus.OK);
 		}catch(Exception e) {
-			returnMap.put("Status", false);
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
@@ -188,9 +185,35 @@ public class CustomerController {
 		}
 		return new ResponseEntity(returnMap,HttpStatus.OK);
 		}catch(Exception e) {
+			System.out.println(e);
 			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 }
+	
+	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> UpdateCustomer(@PathVariable("id")int id,@RequestBody Customer cus){
+		Map<String, Object> returnMap=new HashMap<String, Object>();
+		int result=0;
+		boolean flag=false;
+		try {
+			result= cusService.UpdateCustomer(id, cus);
+			if(result>0) {
+				flag=true;
+				returnMap.put("Status", flag);
+				returnMap.put("UserID", id);
+			}else {
+				returnMap.put("Status", "Something Went Wrong!");
+			}
+			return new ResponseEntity(returnMap,HttpStatus.OK);
+		}catch(Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+		
+		
+	}
 }
 		

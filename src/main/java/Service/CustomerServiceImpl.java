@@ -1,5 +1,7 @@
 package Service;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,57 +13,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Service;
 
 import Dao.Customer;
+import Service.Interface.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
-	private  JdbcTemplate jdbcTemplate;
-	
+	private JdbcTemplate jdbcTemplate;
+
 	@Bean
 	public void jdbcTemplate(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
+
 	@Override
 	public Customer getCustomerById(int id) {
-		String sql="select * from tblcustomer where userid=?";
-		/*
-		 * SqlParameterSource mapParam=new MapSqlParameterSource("userid",id); Customer
-		 * customer= jdbcTemplate.queryForObject(sql, new
-		 * SqlParameterSource(),(RowMapper<T>) mapParam);
-		 */
-		Customer customer = (Customer)jdbcTemplate.queryForObject(
-				sql, new Object[] { id }, 
+		String sql = "select * from tblcustomer where userid=?";
+		Customer customer = null;
+
+		customer = (Customer) jdbcTemplate.queryForObject(sql, new Object[] { id },
 				new BeanPropertyRowMapper(Customer.class));
-		if(customer==null) {
-			return null;
-		}
-		
+
 		return customer;
-		
-		
+
 	}
 
 	@Override
 	public ArrayList<Customer> getAllCustomer() {
-		String sql="select * from tblcustomer";
-		ArrayList<Customer> customers=new ArrayList<Customer>();
-		customers = (ArrayList<Customer>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(Customer.class));
-		
+		String sql = "select * from tblcustomer";
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		customers = (ArrayList<Customer>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(Customer.class));
+
 		return customers;
 	}
 
 	@Override
 	public Customer getCustomerByUsername(String username) {
-		String sql="select * from tblcustomer where username=?";
-		Customer customer=null;
+		String sql = "select * from tblcustomer where username=?";
+		Customer customer = null;
 		try {
-		customer=(Customer)jdbcTemplate.queryForObject(sql, new Object[] {username},new BeanPropertyRowMapper(Customer.class));
-		}catch(Exception e) {
+			customer = (Customer) jdbcTemplate.queryForObject(sql, new Object[] { username },
+					new BeanPropertyRowMapper(Customer.class));
+		} catch (Exception e) {
 			return null;
 		}
 		return customer;
@@ -69,8 +66,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public int deleteCustomerById(int id) {
-		String sql="delete from tblcustomer where userid=?";
-		int result=jdbcTemplate.update(sql, new Object[] {id});
+		String sql = "delete from tblcustomer where userid=?";
+		int result = jdbcTemplate.update(sql, new Object[] { id });
 		return result;
 	}
 
@@ -78,54 +75,65 @@ public class CustomerServiceImpl implements CustomerService {
 	public int insertCustomerDetails(Customer cus) {
 		int result = 0;
 		System.out.println(cus.toString());
-		String sql="INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2, paramstr3, createdate, updatedate, userstatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] obj=new Object[] {
-				
-				//cus.getUserid(),
-				cus.getUsername(),
-				cus.getPassword(),
-				cus.getFirstname(),
-				cus.getLastname(),
-				cus.getEmailid(),
-				cus.getMobile(),
-				cus.getAddress(),
-				cus.getUsertype(),
-				cus.getLoginatmp(),
-				cus.getParamstr1(),
-				cus.getParamstr2(),
-				cus.getParamstr3(),
-				cus.getCreatedate(),
-				cus.getUpdatedate(),
-				cus.getUserstatus()
-		};
-		int[] types = new int[] {
-				//Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.TINYINT,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.TIMESTAMP,
-				Types.TIMESTAMP,
-				Types.VARCHAR
-				
-		};
-		
-		try {
-		result=jdbcTemplate.update(sql, obj,types);
-		}catch(Exception e) {
-			System.out.println(e);
-		}
+		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2, paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenseshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setString(1, cus.getUsername());
+				ps.setString(2, cus.getPassword());
+				ps.setString(3, cus.getFirstname());
+				ps.setString(4, cus.getLastname());
+				ps.setString(5, cus.getEmailid());
+				ps.setString(6, cus.getMobile());
+				ps.setString(7, cus.getAddress());
+				ps.setString(8, cus.getUsertype());
+				ps.setInt(9, cus.getLoginatmp());
+				ps.setString(10, cus.getParamstr1());
+				ps.setString(11, cus.getParamstr2());
+				ps.setString(12, cus.getParamstr3());
+				ps.setTimestamp(13, cus.getCreatedate());
+				ps.setTimestamp(14,cus.getUpdatedate());
+				ps.setString(15, cus.getUserstatus());
+				ps.setString(16, cus.getAgentname());
+				ps.setString(17, cus.getShopname());
+				ps.setString(18, cus.getVillagecity());
+				ps.setString(19, cus.getTaluka());
+				ps.setString(20, cus.getDistrict());
+				ps.setString(21, cus.getPincode());
+				ps.setString(22, cus.getAdharnumber());
+				ps.setString(23, cus.getVoterid());
+				ps.setString(24, cus.getPannumber());
+				ps.setString(25, cus.getLicenceshop());
+				ps.setString(26, cus.getGstnumber());
+				ps.setString(27, cus.getOwnerphoto());
+				ps.setString(28, cus.getShopphoto());
+			}
+			
+		});
+
 		return result;
 	}
 
-	
+	public int UpdateCustomer(int id, Customer cus) {
+		String sql = "UPDATE tblcustomer SET firstname=?,lastname=?,emailid=?,mobile=?,address=? where userid=?";
+		int result = 0;
+
+		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
+
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+
+				ps.setString(1, cus.getFirstname());
+				ps.setString(2, cus.getLastname());
+				ps.setString(3, cus.getEmailid());
+				ps.setString(4, cus.getMobile());
+				ps.setString(5, cus.getAddress());
+				ps.setInt(6, id);
+			}
+		});
+
+		return result;
+	}
 
 }
