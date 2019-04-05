@@ -1,5 +1,6 @@
 package Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.ls.LSInput;
 
 import Dao.Customer;
 import Dao.CustomerType;
@@ -37,6 +39,29 @@ public class CustomerTypeController {
 			} else {
 				returnMap.put("Status", flag);
 				returnMap.put("Message", "Something Went Wrong!");
+			}
+			return new ResponseEntity(returnMap, HttpStatus.OK);
+		} catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@RequestMapping("/all")
+	public ResponseEntity<Map<String, Object>> getAllCType() {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		try {
+			ArrayList<CustomerType> listctype = cusTypeServ.getAllCType();
+			if (listctype.size() > 0 && !listctype.isEmpty()) {
+				flag = true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details", listctype);
+			} else {
+				returnMap.put("Status", flag);
+				returnMap.put("Message", "CustomerType Not Found!");
 			}
 			return new ResponseEntity(returnMap, HttpStatus.OK);
 		} catch (Exception e) {
@@ -118,27 +143,27 @@ public class CustomerTypeController {
 		}
 
 	}
-	
+
 	@RequestMapping("/typename/{usertypename}")
-	public ResponseEntity<Map<String, Object>> getCustomerUserTypeByTypeName(@PathVariable("usertypename") String usertypename){
+	public ResponseEntity<Map<String, Object>> getCustomerUserTypeByTypeName(
+			@PathVariable("usertypename") String usertypename) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		CustomerType custype=null;
+		CustomerType custype = null;
 		boolean flag = false;
 		try {
-			custype=cusTypeServ.getCustomerUserTypeByTypeName(usertypename);
-			if(custype!=null) {
-				flag=true;
+			custype = cusTypeServ.getCustomerUserTypeByTypeName(usertypename);
+			if (custype != null) {
+				flag = true;
 				returnMap.put("Status", flag);
-				returnMap.put("Details", custype);	
+				returnMap.put("Details", custype);
 			}
 			return new ResponseEntity(returnMap, HttpStatus.OK);
-		}catch (Exception e) {
-			//System.out.println(e);
+		} catch (Exception e) {
+			// System.out.println(e);
 			returnMap.put("Status", flag);
 			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		
+
 	}
 }

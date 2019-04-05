@@ -137,7 +137,7 @@ public class ProductCategoryController {
 		
 	}
 	
-	@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> deleteCategoryById(@PathVariable("id")int id){
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		boolean flag = false;

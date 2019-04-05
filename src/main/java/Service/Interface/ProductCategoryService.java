@@ -12,4 +12,5 @@ public interface ProductCategoryService {
 	public int updateCategory(int id,ProductCategory category);
 	public ArrayList<ProductCategory> getAllCategory();
 	public int deleteCategoryById(int id);
+	public ProductCategory getProductCategoryByName(String cname);
 }

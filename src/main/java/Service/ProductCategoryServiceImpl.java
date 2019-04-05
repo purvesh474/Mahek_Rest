@@ -65,9 +65,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 	@Override
 	public int AddCategory(ProductCategory category) {
 		String sql="INSERT INTO tblproductcategory (categoryname,description) VALUES(?,?) ";
+		
 		int result=0;
 		try {
-			//System.out.println(category.toString());
+			ProductCategory pcat=getProductCategoryByName(category.getCategoryname());
+			if(pcat==null) {
 		Object[] obj=new Object[] {
 			category.getCategoryname(),
 			category.getDescription()
@@ -77,6 +79,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 			Types.VARCHAR
 		};
 		result=jdbcTemplate.update(sql, obj,types);
+			}
 		}catch(Exception e ) {
 			//System.out.println(e);
 			return 0;
@@ -118,6 +121,18 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		String sql = "delete from tblproductcategory where categoryid=?";
 		int result = jdbcTemplate.update(sql, new Object[] { id });
 		return result;
+	}
+
+	@Override
+	public ProductCategory getProductCategoryByName(String cname) {
+		String sql="select * from tblproductcategory where categoryname=?";
+		ProductCategory pcat=null;
+		try {
+		pcat=(ProductCategory) jdbcTemplate.queryForObject(sql, new Object[] {cname},new BeanPropertyRowMapper(ProductCategory.class));
+		}catch (Exception e) {
+			return null;
+		}
+		return pcat;
 	}
 
 }

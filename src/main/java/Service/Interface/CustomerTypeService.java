@@ -1,5 +1,7 @@
 package Service.Interface;
 
+import java.util.ArrayList;
+
 import Dao.CustomerType;
 
 public interface CustomerTypeService {
@@ -11,4 +13,5 @@ public interface CustomerTypeService {
 	public CustomerType getCustomerUserTypeByTypeName(String name);
 	public int updatemargin(String margin,String name);
 
+	public ArrayList<CustomerType> getAllCType();
 }

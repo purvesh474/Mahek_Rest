@@ -2,6 +2,7 @@ package Service;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
@@ -95,6 +96,14 @@ public class CustomerTypeServiceImpl implements CustomerTypeService {
 			System.out.println(e);
 		}
 		return result;
+	}
+
+	@Override
+	public ArrayList<CustomerType> getAllCType() {
+		String sql="select * from tblcustomertype";
+		ArrayList<CustomerType> list=(ArrayList<CustomerType>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(CustomerType.class));
+		
+		return list;
 	}
 
 }

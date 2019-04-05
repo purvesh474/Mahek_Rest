@@ -25,10 +25,7 @@ public class CustomerController {
 	@Autowired
 	public CustomerService cusService;
 	
-	@RequestMapping("/index")
-	public String getIndex() {
-		return "Hello Index!";
-	}
+	
 	@RequestMapping("/id/{id}")
 	public ResponseEntity<Map<String, Object>> getCustomerById(@PathVariable("id") int id) {
 		Map<String, Object> returnMap=new HashMap<String, Object>();
@@ -96,7 +93,7 @@ public class CustomerController {
 		
 	}
 	
-	@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> deleteCustomerById(@PathVariable("id") int id) {
 		
 		Map<String, Object> returnMap=new HashMap<String, Object>();
