@@ -75,7 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public int insertCustomerDetails(Customer cus) {
 		int result = 0;
 		System.out.println(cus.toString());
-		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2, paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenseshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2, paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenceshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			
@@ -134,11 +134,11 @@ public class CustomerServiceImpl implements CustomerService {
 				ps.setString(6, cus.getUserstatus());
 				ps.setString(7, cus.getAgentname());
 				ps.setString(8, cus.getShopname());
-				ps.setString(8, cus.getVillagecity());
-				ps.setString(9, cus.getTaluka());
-				ps.setString(10, cus.getDistrict());
-				ps.setString(11, cus.getPincode());
-				ps.setInt(12, id);
+				ps.setString(9, cus.getVillagecity());
+				ps.setString(10, cus.getTaluka());
+				ps.setString(11, cus.getDistrict());
+				ps.setString(12, cus.getPincode());
+				ps.setInt(13, id);
 			}
 		});
 
