@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
 		String password=credential.get("password");
 		String usertype=credential.get("usertype");
 		ArrayList<Customer> customer=null;
-		String sql="select * from tblcustomer where username=? and password=? and usertype=?";
+		String sql="select * from tblcustomer where username=? and BINARY password=? and usertype=?";
 		
 		try {
 		customer= (ArrayList<Customer>) jdbcTemplate.query(sql, new Object[] {username,password,usertype},new BeanPropertyRowMapper(Customer.class));

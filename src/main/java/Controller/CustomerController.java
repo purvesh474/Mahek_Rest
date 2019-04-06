@@ -182,7 +182,7 @@ public class CustomerController {
 		}
 		return new ResponseEntity(returnMap,HttpStatus.OK);
 		}catch(Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 			returnMap.put("Status", flag);
 			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);	
@@ -205,6 +205,31 @@ public class CustomerController {
 			}
 			return new ResponseEntity(returnMap,HttpStatus.OK);
 		}catch(Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+		
+		
+	}
+	
+	@RequestMapping(value="/changepassword",method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> changePassword(@RequestBody Map<String,String> cpassmap){
+		Map<String, Object> returnMap=new HashMap<String, Object>();
+		int result=0;
+		boolean flag=false;
+		try {
+			result=cusService.changePassword(cpassmap);
+			if(result>0) {
+				flag=true;
+				returnMap.put("Status", flag);
+				returnMap.put("Message","Password changed Successfully!" );
+			}else {
+				returnMap.put("Status", flag);
+				returnMap.put("Message","Please enter correct password!" );
+			}
+			return new ResponseEntity(returnMap,HttpStatus.OK);
+		}catch (Exception e) {
 			returnMap.put("Status", flag);
 			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);	

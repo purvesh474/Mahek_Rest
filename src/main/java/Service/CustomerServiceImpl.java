@@ -76,6 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
 		int result = 0;
 		System.out.println(cus.toString());
 		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2, paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenseshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			
 			@Override
@@ -111,12 +112,13 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 			
 		});
-
+		
 		return result;
 	}
 
 	public int UpdateCustomer(int id, Customer cus) {
-		String sql = "UPDATE tblcustomer SET firstname=?,lastname=?,emailid=?,mobile=?,address=? where userid=?";
+		String sql = "UPDATE tblcustomer SET firstname=?,lastname=?,emailid=?,mobile=?,address=?,userstatus=?,agentname=?,shopname=?,"
+				+ "villagecity=?,taluka=?,district=?,pincode=? where userid=?";
 		int result = 0;
 
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
@@ -129,11 +131,53 @@ public class CustomerServiceImpl implements CustomerService {
 				ps.setString(3, cus.getEmailid());
 				ps.setString(4, cus.getMobile());
 				ps.setString(5, cus.getAddress());
-				ps.setInt(6, id);
+				ps.setString(6, cus.getUserstatus());
+				ps.setString(7, cus.getAgentname());
+				ps.setString(8, cus.getShopname());
+				ps.setString(8, cus.getVillagecity());
+				ps.setString(9, cus.getTaluka());
+				ps.setString(10, cus.getDistrict());
+				ps.setString(11, cus.getPincode());
+				ps.setInt(12, id);
 			}
 		});
 
 		return result;
+	}
+
+	@Override
+	public int changePassword(Map<String, String> map) {
+		String sql="update tblcustomer set password=? where userid=? ";
+		String cpassword=map.get("password");
+		String id=map.get("userid");
+		String newPassword=map.get("newpassword");
+		int result=0;
+		boolean flag=checkPassword(cpassword, Integer.parseInt(id));
+		if(flag==true) {
+		result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				// TODO Auto-generated method stub
+				ps.setString(1, newPassword);
+				ps.setInt(2, Integer.parseInt(id));
+			}
+		});
+		}
+		return result;
+	}
+	
+	private boolean checkPassword(String password,int id ) {
+		String sql="select * from tblcustomer where BINARY password=? and userid=?";
+		try {
+		Customer cus=(Customer) jdbcTemplate.queryForObject(sql, new Object[] {password,id},new BeanPropertyRowMapper(Customer.class));
+		if(cus!=null) {
+			return true;
+		}
+		}catch (Exception e) {
+		return false;
+		}
+		return false;
 	}
 
 }

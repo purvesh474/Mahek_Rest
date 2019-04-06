@@ -14,20 +14,14 @@ public class Customer {
 	private int userid;
 	private String username;
 	private String password;
-	@NotNull(message="Firstname Can not be Null")
+
 	private String firstname;
-	@NotNull(message="LastName Can not be Null")
 	private String lastname;
-	@NotNull(message="Email ID Can not be null")
-	@Email(message="Email id not valid")
 	private String emailid;
-	@NotNull(message="Mobile number Can not be null")
 	private String mobile;
-	@NotNull(message="Address Can not be null")
 	private String address;
-	@NotNull(message="UserType Can not be null")
 	private String usertype;
-	private Byte loginatmp;
+	private int loginatmp;
 	private String paramstr1;
 	private String paramstr2;
 	private String paramstr3;
@@ -112,10 +106,10 @@ public class Customer {
 	public void setUsertype(String usertype) {
 		this.usertype = usertype;
 	}
-	public Byte getLoginatmp() {
+	public int getLoginatmp() {
 		return loginatmp;
 	}
-	public void setLoginatmp(Byte loginatmp) {
+	public void setLoginatmp(int loginatmp) {
 		this.loginatmp = loginatmp;
 	}
 	public String getParamstr1() {
@@ -234,8 +228,8 @@ public class Customer {
 		this.shopphoto = shopphoto;
 	}
 	
-	@Override
-	public String toString() {
+	
+	/*public String toString() {
 		return "Customer [userid=" + userid + ", username=" + username + ", password=" + password + ", firstname="
 				+ firstname + ", lastname=" + lastname + ", emailid=" + emailid + ", mobile=" + mobile + ", address="
 				+ address + ", usertype=" + usertype + ", loginatmp=" + loginatmp + ", paramstr1=" + paramstr1
@@ -245,7 +239,7 @@ public class Customer {
 				+ ", district=" + district + ", pincode=" + pincode + ", adharnumber=" + adharnumber + ", voterid="
 				+ voterid + ", pannumber=" + pannumber + ", licenceshop=" + licenceshop + ", gstnumber=" + gstnumber
 				+ ", ownerphoto=" + ownerphoto + ", shopphoto=" + shopphoto + "]";
-	}
+	}*/
 	
 	
 }
