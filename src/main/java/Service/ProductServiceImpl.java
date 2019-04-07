@@ -64,8 +64,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int updateProductDetails(int id, Product product) {
-		String sql="UPDATE tblproduct SET productname=?,description=?,uom=?,productstatus=?,price=?,retailermarginprice=?,customermarginprice=?,instockcount,totalorderedcount=? where productid=?";
-		int result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
+		String sql="UPDATE tblproduct SET productname=?,description=?,uom=?,productstatus=?,price=?,retailermarginprice=?,customermarginprice=?,instockcount=?,totalorderedcount=?,imagepath=?,categoryid=? where productid=?";
+		int result=0;
+		try {
+		 result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
 			
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
@@ -78,9 +80,15 @@ public class ProductServiceImpl implements ProductService {
 				ps.setString(7, product.getCustomermarginprice());
 				ps.setInt(8, product.getInstockcount());
 				ps.setInt(9, product.getTotalorderedcount());
-				ps.setInt(10, id);
+				ps.setString(10, product.getImagepath());
+				ps.setInt(11, product.getCategoryid());
+				ps.setInt(12, id);
 			}
 		});
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
 		return result;
 	}
 
@@ -120,8 +128,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int deleteProduct(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql="delete from tblproduct where productid=?";
+		int result=jdbcTemplate.update(sql,new Object[] {id});
+				
+		return result;
 	}
 
 	@Override

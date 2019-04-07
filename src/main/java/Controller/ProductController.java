@@ -172,7 +172,7 @@ public class ProductController {
 			if(result>0) {
 				flag=true;
 				returnMap.put("Status", flag);
-				returnMap.put("ProductCode", product.getProductcode());
+				returnMap.put("Message", "Product Updated successfully!");
 			}else {
 				returnMap.put("Status", flag);
 				returnMap.put("Message","Product not updated!");
@@ -183,6 +183,31 @@ public class ProductController {
 			returnMap.put("Message", "Something Went Wrong!");
 			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
+	}
+	
+	@RequestMapping("/delete/{id}")
+	public ResponseEntity<Map<String, Object>> deleteProductByID(@PathVariable("id") int id){
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		int result=0;
+		try {
+			result=proService.deleteProduct(id);
+			if(result>0) {
+				flag=true;
+				returnMap.put("Status", flag);
+				returnMap.put("Message", "Produt deleted successfully!");
+			}else {
+				returnMap.put("Status", flag);
+				returnMap.put("Message","Produt not deleted successfully!");
+			}
+			return new ResponseEntity(returnMap,HttpStatus.OK);
+		}catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 		
 	}
 	private String generateProductCode() {

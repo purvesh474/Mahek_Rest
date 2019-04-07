@@ -120,7 +120,7 @@ public class CustomerServiceImpl implements CustomerService {
 		String sql = "UPDATE tblcustomer SET firstname=?,lastname=?,emailid=?,mobile=?,address=?,userstatus=?,agentname=?,shopname=?,"
 				+ "villagecity=?,taluka=?,district=?,pincode=? where userid=?";
 		int result = 0;
-
+try {
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
 
 			@Override
@@ -141,6 +141,9 @@ public class CustomerServiceImpl implements CustomerService {
 				ps.setInt(13, id);
 			}
 		});
+}catch (Exception e) {
+	System.out.println(e);
+}
 
 		return result;
 	}
