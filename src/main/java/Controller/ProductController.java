@@ -29,8 +29,8 @@ public class ProductController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> addProductDetails(@RequestBody Product product) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		String productCode=generateProductCode();
-		product.setProductcode(productCode);
+		//String productCode=generateProductCode();
+		//product.setProductcode(productCode);
 		boolean flag = false;
 		try {
 			int result=proService.addProductDetails(product);
@@ -210,8 +210,10 @@ public class ProductController {
 		
 		
 	}
-	private String generateProductCode() {
-
+	
+	@RequestMapping("/generatecode")
+	private ResponseEntity<Map<String, Object>> generateProductCode() {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
 		StringBuilder productCode = new StringBuilder();
 		productCode.append("PRD");
 		do {
@@ -219,8 +221,8 @@ public class ProductController {
 			int x = random.nextInt(99900) + 100;
 			productCode.append(x);
 		} while (proService.getProductByProductCode(productCode.toString()) != null);
-		return productCode.toString();
-
+		returnMap.put("productcode", productCode);
+		return new ResponseEntity(returnMap,HttpStatus.OK);
 	}
 	
 	
