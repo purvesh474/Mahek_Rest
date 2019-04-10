@@ -34,6 +34,7 @@ public class DashboardController {
 				returnMap.put("Count", count);
 			}else {
 				returnMap.put("Status", flag);
+				returnMap.put("Count", count);
 				returnMap.put("Message","This type of user not found");
 			}
 			return new ResponseEntity(returnMap,HttpStatus.OK);
@@ -58,6 +59,7 @@ public class DashboardController {
 				returnMap.put("Count", count);
 			}else {
 				returnMap.put("Status", flag);
+				returnMap.put("Count", count);
 				returnMap.put("Message","Product Not Found");
 			}
 			return new ResponseEntity(returnMap,HttpStatus.OK);
@@ -81,6 +83,7 @@ public class DashboardController {
 				returnMap.put("Count", count);
 			}else {
 				returnMap.put("Status", flag);
+				returnMap.put("Count", count);
 				returnMap.put("Message","Product Not Found for this category");
 			}
 			return new ResponseEntity(returnMap,HttpStatus.OK);

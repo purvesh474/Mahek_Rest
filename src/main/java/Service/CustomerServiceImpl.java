@@ -75,8 +75,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public int insertCustomerDetails(Customer cus) {
 		int result = 0;
 		System.out.println(cus.toString());
-		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2, paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenceshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		
+		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2,"
+				+ " paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenceshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			
 			@Override
@@ -112,7 +113,10 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 			
 		});
-		
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
 		return result;
 	}
 

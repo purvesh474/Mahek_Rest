@@ -167,6 +167,7 @@ public class ProductController {
 	public ResponseEntity<Map<String, Object>> UpdateProductById(@PathVariable("id") int id,@RequestBody Product product){
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		boolean flag = false;
+		System.out.println(product);
 		try {
 			int result=proService.updateProductDetails(id, product);
 			if(result>0) {

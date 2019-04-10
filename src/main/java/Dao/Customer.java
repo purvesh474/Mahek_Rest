@@ -46,6 +46,12 @@ public class Customer {
 	
 	
 	
+	public String getLicenceshop() {
+		return licenceshop;
+	}
+	public void setLicenceshop(String licenceshop) {
+		this.licenceshop = licenceshop;
+	}
 	public String getMessage() {
 		return message;
 	}
@@ -203,12 +209,7 @@ public class Customer {
 	public void setPannumber(String pannumber) {
 		this.pannumber = pannumber;
 	}
-	public String getLicenceshop() {
-		return licenceshop;
-	}
-	public void setLicenceshop(String licenceshop) {
-		this.licenceshop = licenceshop;
-	}
+	
 	public String getGstnumber() {
 		return gstnumber;
 	}

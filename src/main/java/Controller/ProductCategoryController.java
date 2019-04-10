@@ -36,7 +36,8 @@ public class ProductCategoryController {
 			if (result > 0) {
 				flag = true;
 				returnMap.put("Status", flag);
-				returnMap.put("CategoryName", category.getCategoryname());
+				ProductCategory cat=categoryserv.getProductCategoryByName(category.getCategoryname());
+				returnMap.put("CategoryID", cat.getCategoryid());
 			} else {
 				returnMap.put("Status", flag);
 				returnMap.put("Message", "Something Went Wrong!");
