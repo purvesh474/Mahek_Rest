@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Dao.Customer;
 import Dao.Product;
+import Dao.ProductCategory;
+import Service.Interface.ProductCategoryService;
 import Service.Interface.ProductService;;
 
 @RestController
@@ -25,12 +27,16 @@ public class ProductController {
 
 	@Autowired
 	public ProductService proService;
+	
+	@Autowired
+	private ProductCategoryService ps;
+
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> addProductDetails(@RequestBody Product product) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		//String productCode=generateProductCode();
-		//product.setProductcode(productCode);
+		ProductCategory pc=ps.getCategoryById(product.getCategoryid());
+		product.setCategoryname(pc.getCategoryname());
 		boolean flag = false;
 		try {
 			int result=proService.addProductDetails(product);
@@ -76,6 +82,28 @@ public class ProductController {
 		boolean flag = false;
 		try {
 			ArrayList<Product> listProduct=proService.getAllProduct();
+			if(listProduct!=null && listProduct.size()>0) {
+				flag=true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details", listProduct);
+			}else {
+				returnMap.put("Status", flag);
+				returnMap.put("Message", "Product Not Found!");
+			}
+			return new ResponseEntity(returnMap,HttpStatus.OK);
+		}catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
+	@RequestMapping("/all/active")
+	public ResponseEntity<Map<String, Object>> getAllActiveProduct(){
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		try {
+			ArrayList<Product> listProduct=proService.getAllActiveProduct();
 			if(listProduct!=null && listProduct.size()>0) {
 				flag=true;
 				returnMap.put("Status", flag);
@@ -168,6 +196,8 @@ public class ProductController {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		boolean flag = false;
 		System.out.println(product);
+		ProductCategory pc=ps.getCategoryById(product.getCategoryid());
+		product.setCategoryname(pc.getCategoryname());
 		try {
 			int result=proService.updateProductDetails(id, product);
 			if(result>0) {
@@ -224,6 +254,33 @@ public class ProductController {
 		} while (proService.getProductByProductCode(productCode.toString()) != null);
 		returnMap.put("productcode", productCode);
 		return new ResponseEntity(returnMap,HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping("/groupcat")
+	public ResponseEntity<Map<String, Object>> getGroupCatOfActiveProduct(){
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		ArrayList<String> listString=new ArrayList<>();
+		try {
+			ArrayList<Product> listCat=proService.getGroupCategoryOfActiveProduct();
+			for(int i=0;i<listCat.size();i++) {
+				listString.add(listCat.get(i).getCategoryname());
+			}
+			//System.out.println(listCat);
+			if(listString.size()>0) {
+				flag=true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details", listString);
+			}
+			return new ResponseEntity(returnMap,HttpStatus.OK);
+		}catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
 	}
 	
 	

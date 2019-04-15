@@ -13,4 +13,5 @@ public interface ProductCategoryService {
 	public ArrayList<ProductCategory> getAllCategory();
 	public int deleteCategoryById(int id);
 	public ProductCategory getProductCategoryByName(String cname);
+	
 }

@@ -24,8 +24,7 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private ProductCategoryService ps;
-
+	
 	@Bean
 	public void jdbcTemplate(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
@@ -35,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 	public int addProductDetails(Product product) {
 		String sql = "INSERT INTO tblproduct (productname,productcode,description,uom,imagepath,productstatus,price,retailermarginprice,customermarginprice,productrating,createdate,updateddate,categoryid,instockcount,totalorderedcount,categoryname) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
-		ProductCategory pc=ps.getCategoryById(product.getCategoryid());
+		//ProductCategory pc=ps.getCategoryById(product.getCategoryid());
 		int result=0;
 		try {
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
@@ -59,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 				ps.setInt(13, product.getCategoryid());
 				ps.setInt(14, product.getInstockcount());
 				ps.setInt(15, product.getTotalorderedcount());
-				ps.setString(16, pc.getCategoryname());
+				ps.setString(16, product.getCategoryname());
 			}
 		});
 		}catch (Exception e) {
@@ -72,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int updateProductDetails(int id, Product product) {
 		String sql="UPDATE tblproduct SET productname=?,description=?,uom=?,productstatus=?,price=?,retailermarginprice=?,customermarginprice=?,instockcount=?,totalorderedcount=?,imagepath=?,categoryid=? , categoryname=? where productid=?";
-		ProductCategory pc=ps.getCategoryById(product.getCategoryid());
+		//ProductCategory pc=ps.getCategoryById(product.getCategoryid());
 		int result=0;
 		try {
 		 result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
@@ -90,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
 				ps.setInt(9, product.getTotalorderedcount());
 				ps.setString(10, product.getImagepath());
 				ps.setInt(11, product.getCategoryid());
-				ps.setString(12, pc.getCategoryname());
+				ps.setString(12, product.getCategoryname());
 				ps.setInt(13, id);
 			}
 		});
@@ -116,7 +115,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ArrayList<Product> getAllProduct() {
-		String sql="select * from tblproduct ORDER BY categoryname";
+		String sql="select * from tblproduct  ORDER BY  categoryname,createdate";
 		ArrayList<Product> listReturn=(ArrayList<Product>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(Product.class));
 		return listReturn;
 	}
@@ -145,10 +144,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ArrayList<Product> viewProductByCategory(String category) {
-		String sql="select * from tblproduct where categoryid=(select categoryid from tblproductcategory where categoryname=?)";
+		String sql="select * from tblproduct where categoryid=(select categoryid from tblproductcategory where categoryname=?) and productstatus='Enable'";
 		ArrayList<Product> listProduct=null;
 		try {
-	 listProduct=(ArrayList<Product>) jdbcTemplate.query(sql, new PreparedStatementSetter() {
+			listProduct=(ArrayList<Product>) jdbcTemplate.query(sql, new PreparedStatementSetter() {
 			
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
@@ -174,6 +173,23 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		return prd;
+	}
+
+	@Override
+	public ArrayList<Product> getGroupCategoryOfActiveProduct() {
+		String sql="select * from tblproduct where productstatus='Enable' group by categoryname order by categoryname";
+		
+		ArrayList<Product> listCat=(ArrayList<Product>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(Product.class));
+		
+		return listCat;
+	}
+
+	@Override
+	public ArrayList<Product> getAllActiveProduct() {
+		String sql="select * from tblproduct where productstatus='Enable' order by categoryname";
+		
+		ArrayList<Product> listpro=(ArrayList<Product>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(Product.class));
+		return listpro;
 	}
 
 }

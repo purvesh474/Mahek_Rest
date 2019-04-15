@@ -13,6 +13,7 @@ public interface ProductService {
 	public Product getProductByID(int id);
 
 	public ArrayList<Product> getAllProduct();
+	public ArrayList<Product> getAllActiveProduct();
 
 	public ArrayList<Product> searchProductByName(String name);
 
@@ -22,4 +23,5 @@ public interface ProductService {
 	
 	public Product getProductByProductCode(String productcode);
 
+	public ArrayList<Product> getGroupCategoryOfActiveProduct();
 }
