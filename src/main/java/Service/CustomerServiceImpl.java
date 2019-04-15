@@ -122,7 +122,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public int UpdateCustomer(int id, Customer cus) {
 		String sql = "UPDATE tblcustomer SET firstname=?,lastname=?,emailid=?,mobile=?,address=?,userstatus=?,agentname=?,shopname=?,"
-				+ "villagecity=?,taluka=?,district=?,pincode=? where userid=?";
+				+ "villagecity=?,taluka=?,district=?,pincode=?,shopphoto=? where userid=?";
 		int result = 0;
 try {
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
@@ -142,7 +142,8 @@ try {
 				ps.setString(10, cus.getTaluka());
 				ps.setString(11, cus.getDistrict());
 				ps.setString(12, cus.getPincode());
-				ps.setInt(13, id);
+				ps.setString(13, cus.getShopphoto());
+				ps.setInt(14, id);
 			}
 		});
 }catch (Exception e) {

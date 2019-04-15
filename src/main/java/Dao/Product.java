@@ -30,7 +30,16 @@ public class Product {
 	private String paramstr8;
 	private String paramstr9;
 	private String paramstr10;
+	private String categoryname;
 	
+	
+	
+	public String getCategoryname() {
+		return categoryname;
+	}
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
+	}
 	public String getProductstatus() {
 		return productstatus;
 	}

@@ -31,7 +31,7 @@ public class CustomerController {
 		Map<String, Object> returnMap=new HashMap<String, Object>();
 		Customer cus=null;
 		boolean flag=false;
-		List returnList=new ArrayList<>();
+		
 		try {
 		cus=cusService.getCustomerById(id);
 		if(cus!=null) {
@@ -142,11 +142,12 @@ public class CustomerController {
 			if(customer.getFirstname()!=null && customer.getLastname()!=null) {
 				firstName=customer.getFirstname();
 				lastName=customer.getLastname();
-				if(firstName.length()<3) {
-					Username.append(firstName.substring(0, firstName.length()));
+				Username.append(firstName);
+				/*if(firstName.length()<3) {
+					
 				}else {
 					Username.append((String) firstName.substring(0,3));
-				}
+				}*/
 				if(lastName.length()<3) {
 					Username.append(lastName.substring(0, lastName.length()));
 				}else {

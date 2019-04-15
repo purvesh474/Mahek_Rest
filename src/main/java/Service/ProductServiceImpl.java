@@ -14,6 +14,8 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Service;
 
 import Dao.Product;
+import Dao.ProductCategory;
+import Service.Interface.ProductCategoryService;
 import Service.Interface.ProductService;
 
 @Service
@@ -21,6 +23,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	private ProductCategoryService ps;
 
 	@Bean
 	public void jdbcTemplate(DataSource dataSource) {
@@ -29,7 +33,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int addProductDetails(Product product) {
-		String sql = "INSERT INTO tblproduct (productname,productcode,description,uom,imagepath,productstatus,price,retailermarginprice,customermarginprice,productrating,createdate,updateddate,categoryid,instockcount,totalorderedcount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO tblproduct (productname,productcode,description,uom,imagepath,productstatus,price,retailermarginprice,customermarginprice,productrating,createdate,updateddate,categoryid,instockcount,totalorderedcount,categoryname) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		ProductCategory pc=ps.getCategoryById(product.getCategoryid());
 		int result=0;
 		try {
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
@@ -53,6 +59,7 @@ public class ProductServiceImpl implements ProductService {
 				ps.setInt(13, product.getCategoryid());
 				ps.setInt(14, product.getInstockcount());
 				ps.setInt(15, product.getTotalorderedcount());
+				ps.setString(16, pc.getCategoryname());
 			}
 		});
 		}catch (Exception e) {
@@ -64,7 +71,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int updateProductDetails(int id, Product product) {
-		String sql="UPDATE tblproduct SET productname=?,description=?,uom=?,productstatus=?,price=?,retailermarginprice=?,customermarginprice=?,instockcount=?,totalorderedcount=?,imagepath=?,categoryid=? where productid=?";
+		String sql="UPDATE tblproduct SET productname=?,description=?,uom=?,productstatus=?,price=?,retailermarginprice=?,customermarginprice=?,instockcount=?,totalorderedcount=?,imagepath=?,categoryid=? , categoryname=? where productid=?";
+		ProductCategory pc=ps.getCategoryById(product.getCategoryid());
 		int result=0;
 		try {
 		 result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
@@ -82,7 +90,8 @@ public class ProductServiceImpl implements ProductService {
 				ps.setInt(9, product.getTotalorderedcount());
 				ps.setString(10, product.getImagepath());
 				ps.setInt(11, product.getCategoryid());
-				ps.setInt(12, id);
+				ps.setString(12, pc.getCategoryname());
+				ps.setInt(13, id);
 			}
 		});
 		}catch (Exception e) {
@@ -107,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ArrayList<Product> getAllProduct() {
-		String sql="select * from tblproduct";
+		String sql="select * from tblproduct ORDER BY categoryname";
 		ArrayList<Product> listReturn=(ArrayList<Product>) jdbcTemplate.query(sql,new BeanPropertyRowMapper(Product.class));
 		return listReturn;
 	}

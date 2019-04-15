@@ -63,7 +63,7 @@ public class BannerServiceImpl implements BannerService{
 
 	@Override
 	public ArrayList<Banner> getAllBanner() {
-		String sql="select * from tblbanner";
+		String sql="select * from tblbanner ORDER BY createdate DESC";
 		ArrayList<Banner> listBanner=(ArrayList<Banner>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(Banner.class));
 		return listBanner;
 	}
