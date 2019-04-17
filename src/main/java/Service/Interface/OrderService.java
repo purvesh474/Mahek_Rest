@@ -10,5 +10,7 @@ public interface OrderService {
 	public ArrayList<Order> getAllOrder();
 	public Order getOrderByUserID(int userid);
 	public int addOrder(Order order);
-	
+	public ArrayList<Order> getAllOrderByOrderNumber();
+ 	public ArrayList<Order> getOrderBYOrderNO(String ordernumber);
+ 	public ArrayList<Order> getOrderByOrdernoAndUserid(int userid,String ordernumber);
 }

@@ -114,4 +114,83 @@ public class OrderController {
 			return new ResponseEntity(returnMap, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@RequestMapping("/viewbygrouporderno")
+	public ResponseEntity<Map<String, Object>> getOrderByOrderNO() {
+
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		ArrayList<Order> listOrder = null;
+		try {
+			listOrder = orderService.getAllOrderByOrderNumber();
+			if (listOrder.size() > 0) {
+				flag = true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details", listOrder);
+			} else {
+				returnMap.put("Status", flag);
+				returnMap.put("Message", "Order Not Found!");
+
+			}
+			return new ResponseEntity(returnMap, HttpStatus.OK);
+		} catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@RequestMapping("/orderno/{ordernumber}")
+	public ResponseEntity<Map<String, Object>> viewOrderbyOrdernumber(@PathVariable("ordernumber") String ordernumber) {
+
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		ArrayList<Order> listOrder = null;
+		try {
+			listOrder = orderService.getOrderBYOrderNO(ordernumber);
+			if (listOrder.size() > 0) {
+				flag = true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details", listOrder);
+			} else {
+				returnMap.put("Status", flag);
+				returnMap.put("Message", "Order Not Found!");
+
+			}
+			return new ResponseEntity(returnMap, HttpStatus.OK);
+		} catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
+	@RequestMapping("/orderbyid/{ordernumber}/{userid}")
+	public ResponseEntity<Map<String, Object>> viewOrderBYuserid(@PathVariable("ordernumber") String ordernumber,@PathVariable("userid") int userid){
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		ArrayList<Order> listOrder = null;
+		try {
+			listOrder=orderService.getOrderByOrdernoAndUserid(userid, ordernumber);
+			if (listOrder.size() > 0) {
+				flag = true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details", listOrder);
+			} else {
+				returnMap.put("Status", flag);
+				returnMap.put("Message", "Order Not Found!");
+
+			}
+			return new ResponseEntity(returnMap, HttpStatus.OK);
+		} catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+	}
 }

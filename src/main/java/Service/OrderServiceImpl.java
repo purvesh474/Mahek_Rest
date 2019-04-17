@@ -103,4 +103,52 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 
+	@Override
+	public ArrayList<Order> getAllOrderByOrderNumber(){
+		String sql="select * from tblorder group by ordernumber";
+		ArrayList<Order> listOrder=null;
+		try {
+		
+		listOrder=(ArrayList<Order>) jdbcTemplate.query(sql, new BeanPropertyRowMapper(Order.class));
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+			return listOrder;
+	}
+
+	@Override
+	public ArrayList<Order> getOrderBYOrderNO(String ordernumber) {
+	String sql="select * from tblorder where ordernumber=?";
+	ArrayList<Order> listOrder = null;
+	try {
+		listOrder=(ArrayList<Order>) jdbcTemplate.query(sql,new Object[] {ordernumber},new BeanPropertyRowMapper(Order.class));
+	}catch (Exception e) {
+		// TODO: handle exception
+	}
+	
+		return listOrder;
+	}
+
+	@Override
+	public ArrayList<Order> getOrderByOrdernoAndUserid(int userid, String ordernumber) {
+		String sql="select * from tblorder where ordernumber=? and userid=?";
+		ArrayList<Order> listOrder = null;
+		try {
+			listOrder=(ArrayList<Order>) jdbcTemplate.query(sql,new PreparedStatementSetter() {
+				
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					// TODO Auto-generated method stub
+					ps.setString(1, ordernumber);
+					ps.setInt(2, userid);
+					
+				}
+			},new BeanPropertyRowMapper(Order.class));
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return listOrder;
+	}
+
 }
