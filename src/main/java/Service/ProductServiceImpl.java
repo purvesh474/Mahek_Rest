@@ -122,12 +122,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ArrayList<Product> searchProductByName(String name) {
-		String sql="select * from tblproduct where productname like ?";
+		String sql="select * from tblproduct where productname like ? order by categoryname";
 		ArrayList<Product> list=(ArrayList<Product>) jdbcTemplate.query(sql, new PreparedStatementSetter() {
 			
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
-				ps.setString(1, name);
+				ps.setString(1, "%"+name+"%");
 				
 			}
 		},new BeanPropertyRowMapper(Product.class));
@@ -192,4 +192,37 @@ public class ProductServiceImpl implements ProductService {
 		return listpro;
 	}
 
+	@Override
+	public ArrayList<Product> ApplyFilterByCategoryName(String[] categories) {
+		System.out.println(categories.toString());
+		String sql="select * from tblproduct where categoryname in (";
+		ArrayList<Product> listPro = null;
+		String temp = "";
+
+		for(int i = 0; i < categories.length; i++) {
+		  temp += ",?";
+		}
+		temp = temp.replaceFirst(",", "");
+		temp += ")";
+		sql=sql+temp+"order by categoryname";
+		System.out.println("Query is "+sql);
+		try {
+		 listPro= (ArrayList<Product>) jdbcTemplate.query(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				for(int i=0;i<categories.length;i++) {
+					ps.setString(i+1, categories[i]);
+				}
+				
+			}
+		},new BeanPropertyRowMapper(Product.class));
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		return listPro;
+	}
+
+	
 }

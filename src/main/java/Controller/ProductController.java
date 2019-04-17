@@ -283,6 +283,32 @@ public class ProductController {
 		
 	}
 	
+	@RequestMapping(value="/applyfilter",method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> applyFilters(@RequestBody Map<String, String[]> categoryMap){
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		boolean flag = false;
+		String[] categories=(String[]) categoryMap.get("categoryname");
+		ArrayList<Product> listpro=new ArrayList<>();
+		try {
+			listpro=proService.ApplyFilterByCategoryName(categories);
+			if(listpro.size()>0) {
+				flag=true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details", listpro);
+			}
+			return new ResponseEntity(returnMap,HttpStatus.OK);
+		}catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+	}
+	
+	
+	
+	
 	
 
 }

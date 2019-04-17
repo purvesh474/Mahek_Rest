@@ -24,4 +24,6 @@ public interface ProductService {
 	public Product getProductByProductCode(String productcode);
 
 	public ArrayList<Product> getGroupCategoryOfActiveProduct();
+	
+	public ArrayList<Product> ApplyFilterByCategoryName(String[] categories);
 }
