@@ -63,30 +63,43 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public int addOrder(Order order) {
-		String sql="INSERT INTO tblorder (ordername,userid,qnty,totalprice,orderstatus,agentname,villagecity,taluka,district,pincode,name,emailid,mobile,address,usertype) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+		String sql="INSERT INTO tblorder (userid,productid,qnty,categoryid,ordernumber,productname,address,totalprice,usertype,mobile,uom,marginedprice,price,categoryname,orderstatus,agentname,villagecity,taluka,district,pincode,name,emailid) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		
-		int result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
+		int result=0;
+		try {
+			result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
 			
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
-				ps.setString(1, order.getOrdername());
-				ps.setInt(2,order.getUserid());
+				ps.setInt(1, order.getUserid());
+				ps.setInt(2, order.getProductid());
 				ps.setInt(3, order.getQnty());
-				ps.setString(4, order.getTotalprice());
-				ps.setString(5, order.getOrderstatus());
-				ps.setString(6, order.getAgentname());
-				ps.setString(7, order.getVillagecity());
-				ps.setString(8, order.getTaluka());
-				ps.setString(9, order.getDistrict());
-				ps.setString(10, order.getPincode());
-				ps.setString(11, order.getName());
-				ps.setString(12, order.getEmailid());
-				ps.setString(13, order.getMobile());
-				ps.setString(14, order.getAddress());
-				ps.setString(15, order.getUsertype());
+				ps.setInt(4, order.getCategoryid());
+				ps.setString(5, order.getOrdernumber());
+				ps.setString(6, order.getProductname());
+				ps.setString(7, order.getAddress());
+				ps.setString(8, order.getTotalprice());
+				ps.setString(9, order.getUsertype());
+				ps.setString(10, order.getMobile());
+				ps.setString(11, order.getUom());
+				ps.setString(12, order.getMarginedprice());
+				ps.setString(13, order.getPrice());
+				ps.setString(14, order.getCategoryname());
+				ps.setString(15, order.getOrderstatus());
+				ps.setString(16, order.getAgentname());
+				ps.setString(17, order.getVillagecity());
+				ps.setString(18, order.getTaluka());
+				ps.setString(19, order.getDistrict());
+				ps.setString(20, order.getPincode());
+				ps.setString(21, order.getName());
+				ps.setString(22, order.getEmailid());
+				
 				
 			}
 		});
+		}catch (Exception e) {
+			System.out.println(e);
+		}
 		return result;
 	}
 
