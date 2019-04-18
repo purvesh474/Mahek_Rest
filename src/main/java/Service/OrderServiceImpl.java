@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public ArrayList<Order> getAllOrderByOrderNumber(){
-		String sql="select * from tblorder group by ordernumber";
+		String sql="select * from tblorder group by ordernumber order by createdate desc";
 		ArrayList<Order> listOrder=null;
 		try {
 		
@@ -121,17 +121,24 @@ public class OrderServiceImpl implements OrderService {
 	String sql="select * from tblorder where ordernumber=?";
 	ArrayList<Order> listOrder = null;
 	try {
-		listOrder=(ArrayList<Order>) jdbcTemplate.query(sql,new Object[] {ordernumber},new BeanPropertyRowMapper(Order.class));
+		listOrder=(ArrayList<Order>) jdbcTemplate.query(sql,new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setString(1, ordernumber);
+				
+			}
+		},new BeanPropertyRowMapper(Order.class));
 	}catch (Exception e) {
-		// TODO: handle exception
+		System.out.println(e);
 	}
 	
 		return listOrder;
 	}
 
 	@Override
-	public ArrayList<Order> getOrderByOrdernoAndUserid(int userid, String ordernumber) {
-		String sql="select * from tblorder where ordernumber=? and userid=?";
+	public ArrayList<Order> getOrderByOrdernoAndUserid(int userid) {
+		String sql="select * from tblorder where userid=? group by ordernumber order by createdate desc";
 		ArrayList<Order> listOrder = null;
 		try {
 			listOrder=(ArrayList<Order>) jdbcTemplate.query(sql,new PreparedStatementSetter() {
@@ -139,8 +146,8 @@ public class OrderServiceImpl implements OrderService {
 				@Override
 				public void setValues(PreparedStatement ps) throws SQLException {
 					// TODO Auto-generated method stub
-					ps.setString(1, ordernumber);
-					ps.setInt(2, userid);
+					
+					ps.setInt(1, userid);
 					
 				}
 			},new BeanPropertyRowMapper(Order.class));

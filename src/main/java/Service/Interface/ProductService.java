@@ -26,4 +26,6 @@ public interface ProductService {
 	public ArrayList<Product> getGroupCategoryOfActiveProduct();
 	
 	public ArrayList<Product> ApplyFilterByCategoryName(String[] categories);
+	
+	public int updateProductInstockCount(int productid,int qnty);
 }

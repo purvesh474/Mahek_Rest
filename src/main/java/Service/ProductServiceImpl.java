@@ -224,5 +224,25 @@ public class ProductServiceImpl implements ProductService {
 		return listPro;
 	}
 
+	@Override
+	public int updateProductInstockCount(int productid, int qnty) {
+		String sql="update tblproduct set instockcount=instockcount-? where productid=?";
+		int result=0;
+		try {
+			result=jdbcTemplate.update(sql,new PreparedStatementSetter() {
+				
+				@Override
+				public void setValues(PreparedStatement ps) throws SQLException {
+					ps.setInt(1, qnty);
+					ps.setInt(2, productid);
+					
+				}
+			});
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return result;
+	}
+
 	
 }

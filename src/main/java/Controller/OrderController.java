@@ -167,14 +167,14 @@ public class OrderController {
 
 	}
 	
-	@RequestMapping("/orderbyid/{ordernumber}/{userid}")
-	public ResponseEntity<Map<String, Object>> viewOrderBYuserid(@PathVariable("ordernumber") String ordernumber,@PathVariable("userid") int userid){
+	@RequestMapping("/orderbyuserid/{userid}")
+	public ResponseEntity<Map<String, Object>> viewOrderBYuserid(@PathVariable("userid") int userid){
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		boolean flag = false;
 		ArrayList<Order> listOrder = null;
 		try {
-			listOrder=orderService.getOrderByOrdernoAndUserid(userid, ordernumber);
+			listOrder=orderService.getOrderByOrdernoAndUserid(userid);
 			if (listOrder.size() > 0) {
 				flag = true;
 				returnMap.put("Status", flag);
