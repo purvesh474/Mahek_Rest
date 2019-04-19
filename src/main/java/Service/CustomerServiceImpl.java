@@ -188,4 +188,11 @@ try {
 		return false;
 	}
 
+	@Override
+	public ArrayList<Customer> getCustomerByUsertype(String usertype) {
+		String sql="select * from tblcustomer where usertype=?";
+		ArrayList<Customer> lisCus=(ArrayList<Customer>) jdbcTemplate.query(sql, new Object[] {usertype},new BeanPropertyRowMapper(Customer.class));
+		return lisCus;
+	}
+
 }

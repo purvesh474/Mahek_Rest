@@ -238,5 +238,32 @@ public class CustomerController {
 		
 		
 	}
+	
+	@RequestMapping("/usertype/{usertype}")
+	public ResponseEntity<Map<String, Object>> getCustomerbyUserType(@PathVariable("usertype") String usertype){
+		
+		Map<String, Object> returnMap=new HashMap<String, Object>();
+		ArrayList<Customer> listCus=null;
+		boolean flag=false;
+		try {
+			listCus=cusService.getCustomerByUsertype(usertype);
+			if(listCus.size()>0) {
+				flag=true;
+				returnMap.put("Status", flag);
+				returnMap.put("Details",listCus );
+			}else{
+				returnMap.put("Status", flag);
+				returnMap.put("Message", "Customer Not Found!");
+			}
+			return new ResponseEntity(returnMap,HttpStatus.OK);
+		}catch (Exception e) {
+			returnMap.put("Status", flag);
+			returnMap.put("Message", "Something Went Wrong!");
+			return new ResponseEntity(returnMap,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+	}
+	
 }
 		

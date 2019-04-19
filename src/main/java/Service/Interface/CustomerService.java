@@ -14,4 +14,6 @@ public interface CustomerService {
 	public int insertCustomerDetails(Customer cus);
 	public int UpdateCustomer(int id, Customer cus);
 	public int changePassword(Map<String, String> map);
+	
+	public ArrayList<Customer> getCustomerByUsertype(String usertype);
 }
