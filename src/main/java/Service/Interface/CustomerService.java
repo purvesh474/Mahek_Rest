@@ -15,5 +15,6 @@ public interface CustomerService {
 	public int UpdateCustomer(int id, Customer cus);
 	public int changePassword(Map<String, String> map);
 	
+	public boolean isEmailIdAlreadyExist(String email);
 	public ArrayList<Customer> getCustomerByUsertype(String usertype);
 }

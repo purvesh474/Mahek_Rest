@@ -78,6 +78,13 @@ public class CustomerServiceImpl implements CustomerService {
 		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2,"
 				+ " paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenceshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
+			
+			boolean emailExistOrNot=isEmailIdAlreadyExist(cus.getEmailid());
+			
+			if(emailExistOrNot) {
+				
+			
+			
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			
 			@Override
@@ -113,7 +120,8 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 			
 		});
-		}catch (Exception e) {
+			}
+			}catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e);
 		}
@@ -122,9 +130,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public int UpdateCustomer(int id, Customer cus) {
 		String sql = "UPDATE tblcustomer SET firstname=?,lastname=?,emailid=?,mobile=?,address=?,userstatus=?,agentname=?,shopname=?,"
-				+ "villagecity=?,taluka=?,district=?,pincode=?,shopphoto=? where userid=?";
+				+ "villagecity=?,taluka=?,district=?,pincode=?,shopphoto=?,adharnumber=?,voterid=?,pannumber=?,licenceshop=?,gstnumber=?,ownerphoto=? where userid=?";
 		int result = 0;
 try {
+	
 		result = jdbcTemplate.update(sql, new PreparedStatementSetter() {
 
 			@Override
@@ -143,7 +152,13 @@ try {
 				ps.setString(11, cus.getDistrict());
 				ps.setString(12, cus.getPincode());
 				ps.setString(13, cus.getShopphoto());
-				ps.setInt(14, id);
+				ps.setString(14, cus.getAdharnumber());
+				ps.setString(15, cus. getVoterid());
+				ps.setString(16, cus.getPannumber());
+				ps.setString(17, cus.getLicenceshop());
+				ps.setString(18, cus.getGstnumber());
+				ps.setString(19, cus.getOwnerphoto());
+				ps.setInt(20, id);
 			}
 		});
 }catch (Exception e) {
@@ -193,6 +208,29 @@ try {
 		String sql="select * from tblcustomer where usertype=?";
 		ArrayList<Customer> lisCus=(ArrayList<Customer>) jdbcTemplate.query(sql, new Object[] {usertype},new BeanPropertyRowMapper(Customer.class));
 		return lisCus;
+	}
+
+	@Override
+	public boolean isEmailIdAlreadyExist(String email) {
+		String sql="select * from tblcustomer where emailid=?";
+		Customer cus=null;
+		
+		try {
+			cus=(Customer) jdbcTemplate.queryForObject(sql, new Object[] {email},new BeanPropertyRowMapper(Customer.class));
+			if(cus!=null) {
+				return false;
+			}
+		}catch (Exception e) {
+			return false;
+		}finally {
+			if(cus==null) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+		
+		
 	}
 
 }
