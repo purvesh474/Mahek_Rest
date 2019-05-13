@@ -76,7 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
 		int result = 0;
 		System.out.println(cus.toString());
 		String sql = "INSERT INTO tblcustomer (username, password, firstname, lastname, emailid, mobile, address, usertype, loginatmp, paramstr1, paramstr2,"
-				+ " paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenceshop,gstnumber,ownerphoto,shopphoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " paramstr3, createdate, updatedate, userstatus, agentname, shopname,villagecity,taluka,district,pincode,adharnumber,voterid,pannumber,licenceshop,gstnumber,ownerphoto,shopphoto,agentemail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
 			
 			boolean emailExistOrNot=isEmailIdAlreadyExist(cus.getEmailid());
@@ -117,6 +117,7 @@ public class CustomerServiceImpl implements CustomerService {
 				ps.setString(26, cus.getGstnumber());
 				ps.setString(27, cus.getOwnerphoto());
 				ps.setString(28, cus.getShopphoto());
+				ps.setString(29, cus.getAgentemail());
 			}
 			
 		});
@@ -130,7 +131,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	public int UpdateCustomer(int id, Customer cus) {
 		String sql = "UPDATE tblcustomer SET firstname=?,lastname=?,emailid=?,mobile=?,address=?,userstatus=?,agentname=?,shopname=?,"
-				+ "villagecity=?,taluka=?,district=?,pincode=?,shopphoto=?,adharnumber=?,voterid=?,pannumber=?,licenceshop=?,gstnumber=?,ownerphoto=? where userid=?";
+				+ "villagecity=?,taluka=?,district=?,pincode=?,shopphoto=?,adharnumber=?,voterid=?,pannumber=?,licenceshop=?,gstnumber=?,ownerphoto=?,agentemail=? where userid=?";
 		int result = 0;
 try {
 	
@@ -158,7 +159,8 @@ try {
 				ps.setString(17, cus.getLicenceshop());
 				ps.setString(18, cus.getGstnumber());
 				ps.setString(19, cus.getOwnerphoto());
-				ps.setInt(20, id);
+				ps.setString(20, cus.getAgentemail());
+				ps.setInt(21, id);
 			}
 		});
 }catch (Exception e) {

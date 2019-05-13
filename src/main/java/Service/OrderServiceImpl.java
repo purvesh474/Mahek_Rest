@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public int addOrder(Order order) {
-		String sql="INSERT INTO tblorder (userid,productid,qnty,categoryid,ordernumber,productname,address,totalprice,usertype,mobile,uom,marginedprice,price,categoryname,orderstatus,agentname,villagecity,taluka,district,pincode,name,emailid) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+		String sql="INSERT INTO tblorder (userid,productid,qnty,categoryid,ordernumber,productname,address,totalprice,usertype,mobile,uom,marginedprice,price,categoryname,orderstatus,agentname,villagecity,taluka,district,pincode,name,emailid,agentemail) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 		
 		int result=0;
 		try {
@@ -93,6 +93,7 @@ public class OrderServiceImpl implements OrderService {
 				ps.setString(20, order.getPincode());
 				ps.setString(21, order.getName());
 				ps.setString(22, order.getEmailid());
+				ps.setString(23, order.getAgentemail());
 				
 				
 			}

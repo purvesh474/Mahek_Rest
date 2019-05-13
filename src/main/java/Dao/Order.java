@@ -23,6 +23,7 @@ public class Order
 	private String categoryname;
 	private String orderstatus;
 	private String agentname;
+	private String agentemail;
 	private String villagecity;
 	private String taluka;
 	private String district;
@@ -144,6 +145,12 @@ public class Order
 	public void setAgentname(String agentname) {
 		this.agentname = agentname;
 	}
+	public String getAgentemail() {
+		return agentemail;
+	}
+	public void setAgentemail(String agentemail) {
+		this.agentemail = agentemail;
+	}
 	public String getVillagecity() {
 		return villagecity;
 	}
@@ -187,9 +194,9 @@ public class Order
 				+ ", address=" + address + ", createdate=" + createdate + ", updateddate=" + updateddate
 				+ ", totalprice=" + totalprice + ", usertype=" + usertype + ", mobile=" + mobile + ", uom=" + uom
 				+ ", marginedprice=" + marginedprice + ", price=" + price + ", categoryname=" + categoryname
-				+ ", orderstatus=" + orderstatus + ", agentname=" + agentname + ", villagecity=" + villagecity
-				+ ", taluka=" + taluka + ", district=" + district + ", pincode=" + pincode + ", name=" + name
-				+ ", emailid=" + emailid + "]";
+				+ ", orderstatus=" + orderstatus + ", agentname=" + agentname + ", agentemail=" + agentemail
+				+ ", villagecity=" + villagecity + ", taluka=" + taluka + ", district=" + district + ", pincode="
+				+ pincode + ", name=" + name + ", emailid=" + emailid + "]";
 	}
 	
 	

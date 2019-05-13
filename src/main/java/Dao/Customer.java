@@ -31,6 +31,7 @@ public class Customer {
 	private String message;
 	
 	private String agentname;
+	private String agentemail;
 	private String shopname;
 	private String villagecity;
 	private String taluka;
@@ -161,6 +162,12 @@ public class Customer {
 	public void setAgentname(String agentname) {
 		this.agentname = agentname;
 	}
+	public String getAgentemail() {
+		return agentemail;
+	}
+	public void setAgentemail(String agentemail) {
+		this.agentemail = agentemail;
+	}
 	public String getShopname() {
 		return shopname;
 	}
@@ -229,18 +236,18 @@ public class Customer {
 		this.shopphoto = shopphoto;
 	}
 	
-	
-	/*public String toString() {
+	@Override
+	public String toString() {
 		return "Customer [userid=" + userid + ", username=" + username + ", password=" + password + ", firstname="
 				+ firstname + ", lastname=" + lastname + ", emailid=" + emailid + ", mobile=" + mobile + ", address="
 				+ address + ", usertype=" + usertype + ", loginatmp=" + loginatmp + ", paramstr1=" + paramstr1
 				+ ", paramstr2=" + paramstr2 + ", paramstr3=" + paramstr3 + ", createdate=" + createdate
 				+ ", updatedate=" + updatedate + ", userstatus=" + userstatus + ", message=" + message + ", agentname="
-				+ agentname + ", shopname=" + shopname + ", villagecity=" + villagecity + ", taluka=" + taluka
-				+ ", district=" + district + ", pincode=" + pincode + ", adharnumber=" + adharnumber + ", voterid="
-				+ voterid + ", pannumber=" + pannumber + ", licenceshop=" + licenceshop + ", gstnumber=" + gstnumber
-				+ ", ownerphoto=" + ownerphoto + ", shopphoto=" + shopphoto + "]";
-	}*/
+				+ agentname + ", agentemail=" + agentemail + ", shopname=" + shopname + ", villagecity=" + villagecity
+				+ ", taluka=" + taluka + ", district=" + district + ", pincode=" + pincode + ", adharnumber="
+				+ adharnumber + ", voterid=" + voterid + ", pannumber=" + pannumber + ", licenceshop=" + licenceshop
+				+ ", gstnumber=" + gstnumber + ", ownerphoto=" + ownerphoto + ", shopphoto=" + shopphoto + "]";
+	}
 	
 	
 }
