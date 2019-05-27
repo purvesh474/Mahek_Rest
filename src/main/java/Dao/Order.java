@@ -30,7 +30,16 @@ public class Order
 	private String pincode;
 	private String name;
 	private String emailid;
+	private String mrp;
+	
+	
 
+	public String getMrp() {
+		return mrp;
+	}
+	public void setMrp(String mrp) {
+		this.mrp = mrp;
+	}
 	public int getOrderid() {
 		return orderid;
 	}
@@ -196,7 +205,7 @@ public class Order
 				+ ", marginedprice=" + marginedprice + ", price=" + price + ", categoryname=" + categoryname
 				+ ", orderstatus=" + orderstatus + ", agentname=" + agentname + ", agentemail=" + agentemail
 				+ ", villagecity=" + villagecity + ", taluka=" + taluka + ", district=" + district + ", pincode="
-				+ pincode + ", name=" + name + ", emailid=" + emailid + "]";
+				+ pincode + ", name=" + name + ", emailid=" + emailid + ", mrp=" + mrp + "]";
 	}
 	
 	
